@@ -1,0 +1,27 @@
+.question-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;align-items: center;
+    justify-content: space-around;
+}
+
+.option-btn {
+    margin-bottom: 20px;
+    border: 1px solid dodgerblue;
+}
+
+.option-btn:disabled {
+    border: none;
+}
+
+.correct-option {
+    margin-bottom: 20px;
+    border: 1px solid seagreen;
+    color: seagreen;
+}
+
+.wrong-option {
+    margin-bottom: 20px;
+    border: 1px solid firebrick;
+    color: firebrick;
+}

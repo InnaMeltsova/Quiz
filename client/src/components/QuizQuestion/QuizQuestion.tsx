@@ -1,8 +1,10 @@
 import './QuizQuestion.css';
+import {useState} from "react";
 
 type Option = {
     content: string,
-    id: number
+    isCorrect: boolean,
+    id: number,
 };
 
 type Question = {
@@ -17,13 +19,37 @@ type QuizQuestionProps = {
 };
 
 const QuizQuestion = ({ question, onAnswer }: QuizQuestionProps) => {
+    const [selected, setSelected] = useState<number | null>(null);
+
+    const handleClick = (selectedIdx: number) => {
+        if(selected === null) {
+            setSelected(selectedIdx);
+        }
+        onAnswer(selectedIdx);
+    }
+
     return (
-        <div>
+        <div className="question-page">
             <h2>{question?.question}</h2>
-            {question?.options.map(option =>
-                <div key={option.id} onClick={() => onAnswer(option.id)}>
-                    {option.content}
-                </div>
+            {question?.options.map((option, idx) => {
+                let className = 'option-btn';
+                if(selected !== null) {
+                    if(option.isCorrect) {
+                        className = 'correct-option';
+                    } else if( idx === selected) {
+                        className = 'wrong-option';
+                    }
+                }
+                return (
+                    <button
+                        className={className}
+                        key={idx}
+                        onClick={() => handleClick(idx)}
+                        disabled={selected !== null}
+                    >
+                        {option.content}
+                    </button>
+                )}
             )}
         </div>
     )
