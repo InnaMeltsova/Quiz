@@ -2,7 +2,23 @@ import './StartQuizPopup.css';
 
 type Step = 1 | 2;
 
+type Category = {
+   name: string,
+   id: number
+};
+
+type Level = {
+   title: string,
+   id: number
+}
+
+type Options = {
+   categories: Category[],
+   levels: Level[]
+}
+
 type BottomPopupProps = {
+   options: Options | null;
    isOpen: boolean;
    onClose: () => void;
    step: Step;
@@ -12,7 +28,7 @@ type BottomPopupProps = {
 };
 
 const StartQuizPopup = (props: BottomPopupProps) => {
-   const { isOpen, onClose, step, category, onCategorySelect, onDifficultySelect } = props;
+   const { options, isOpen, onClose, step, onCategorySelect, onDifficultySelect } = props;
 
    if(!isOpen) return null;
 
@@ -27,18 +43,29 @@ const StartQuizPopup = (props: BottomPopupProps) => {
 
             {step === 1 && (
                 <>
-                   <button className="category-level-btn" onClick={() => onCategorySelect('History')}>History</button>
-                   <button className="category-level-btn" onClick={() => onCategorySelect('Literature')}>Literature</button>
-                   <button className="category-level-btn" onClick={() => onCategorySelect('Science')}>Science</button>
-                   <button className="category-level-btn" onClick={() => onCategorySelect('Math')}>Math</button>
+                   {options?.categories?.map(category => (
+                       <button
+                           key={category.id}
+                           className="category-level-btn"
+                           onClick={() => onCategorySelect(category.name)}
+                       >
+                          {category.name}
+                       </button>
+                   ))}
                 </>
             )}
 
             {step === 2 && (
                 <>
-                   <button className="category-level-btn" onClick={() => onDifficultySelect('Beginner')}>Beginner</button>
-                   <button className="category-level-btn" onClick={() => onDifficultySelect('Intermediate')}>Intermediate</button>
-                   <button className="category-level-btn" onClick={() => onDifficultySelect('Advanced')}>Advanced</button>
+                   {options?.levels?.map(level => (
+                       <button
+                           key={level.id}
+                           className="category-level-btn"
+                           onClick={() => onDifficultySelect(level.title)}
+                       >
+                          {level.title}
+                       </button>
+                   ))}
                 </>
             )}
          </div>
