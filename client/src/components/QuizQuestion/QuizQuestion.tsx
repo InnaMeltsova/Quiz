@@ -16,7 +16,7 @@ type QuizQuestionProps = {
     onAnswer: (selectedIdx: number) => void;
 };
 
-const QuizQuestion = ({ question, onAnswer }) => {
+const QuizQuestion = ({ question, onAnswer }: QuizQuestionProps) => {
     return (
         <div>
             <h2>{question?.question}</h2>
